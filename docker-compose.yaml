@@ -1,0 +1,27 @@
+# This is a docker-compose file for running unit tests against an actual dev instance of vault
+version: "3"
+
+services:
+  vault:
+    image: vault:1.4.2
+    ports:
+    - 8200:8200
+    healthcheck:
+      test: [ "CMD", "vault", "status" ]
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: dev-vault-token
+    networks:
+      - vault-auto-config-test
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile-tests
+    depends_on:
+      - vault
+    networks:
+      - vault-auto-config-test
+
+networks:
+  vault-auto-config-test:
+    driver: bridge

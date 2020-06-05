@@ -1,0 +1,10 @@
+policy: |
+  path "tech/*"
+  {
+    capabilities = ["list"]
+  }
+
+  path "tech/data/user"
+  {
+    capabilities = ["create", "read", "update", "delete", "list"]
+  }
