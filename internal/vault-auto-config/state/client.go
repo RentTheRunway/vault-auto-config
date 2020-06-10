@@ -1,7 +1,6 @@
 package state
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -40,7 +39,7 @@ func (e Entries) Exists(name string) bool {
 func GetString(p Payload, name string) (string, error) {
 	m, ok := p.(map[string]interface{})
 	if !ok {
-		return "", errors.New(fmt.Sprintf("could not get string '%s', payload is wrong type", name))
+		return "", fmt.Errorf("could not get string '%s', payload is wrong type", name)
 	}
 
 	value, ok := m[name]
@@ -50,7 +49,7 @@ func GetString(p Payload, name string) (string, error) {
 
 	casted, ok := value.(string)
 	if !ok {
-		return "", errors.New(fmt.Sprintf("could not get string '%s', wrong type", name))
+		return "", fmt.Errorf("could not get string '%s', wrong type", name)
 	}
 
 	return casted, nil

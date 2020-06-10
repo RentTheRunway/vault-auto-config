@@ -1,7 +1,6 @@
 package state
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -25,7 +24,7 @@ func ApplyAuthState(node *Node, client Client) error {
 	for name, value := range node.Children {
 		auth, ok := auths.Children[name]
 		if !ok && name != "token" {
-			return errors.New(fmt.Sprintf("invalid state, missing required auth mount %s", name))
+			return fmt.Errorf("invalid state, missing required auth mount %s", name)
 		}
 
 		var kind string
@@ -51,7 +50,7 @@ func ApplyAuthState(node *Node, client Client) error {
 		}
 
 		if writer == nil {
-			return errors.New(fmt.Sprintf("unable to write state for unsupported auth type '%s'", kind))
+			return fmt.Errorf("unable to write state for unsupported auth type '%s'", kind)
 		}
 
 		if err := writer(value, name, client); err != nil {

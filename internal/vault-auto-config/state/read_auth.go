@@ -1,7 +1,6 @@
 package state
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -33,7 +32,7 @@ func ReadAuthState(client Client, node *Node) error {
 		}
 
 		if reader == nil {
-			return errors.New(fmt.Sprintf("unable to read state for unsupported auth type '%s'", kind))
+			return fmt.Errorf("unable to read state for unsupported auth type '%s'", kind)
 		}
 
 		if err := reader(client, auth.name, authNode); err != nil {

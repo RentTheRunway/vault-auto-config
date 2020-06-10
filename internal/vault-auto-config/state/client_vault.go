@@ -1,7 +1,6 @@
 package state
 
 import (
-	"errors"
 	"fmt"
 	yaml2 "github.com/goccy/go-yaml"
 	"github.com/hashicorp/vault/api"
@@ -50,7 +49,7 @@ func (c *VaultClient) listSys(path string) (Entries, error) {
 	case "sys/policy":
 		return c.listSysPolicy()
 	default:
-		return nil, errors.New(fmt.Sprintf("unsupported sys path: %s", path))
+		return nil, fmt.Errorf("unsupported sys path: %s", path)
 	}
 }
 
@@ -131,7 +130,7 @@ func (c *VaultClient) list(path string) (Entries, error) {
 	keys, ok := result.Data["keys"].([]interface{})
 
 	if !ok {
-		return nil, errors.New(fmt.Sprintf("keys for %s of the wrong type", path))
+		return nil, fmt.Errorf("keys for %s of the wrong type", path)
 	}
 
 	var data []*Entry = nil
@@ -145,7 +144,7 @@ func (c *VaultClient) list(path string) (Entries, error) {
 
 		keyString, ok := key.(string)
 		if !ok {
-			return nil, errors.New(fmt.Sprintf("key for %s of the wrong type", path))
+			return nil, fmt.Errorf("key for %s of the wrong type", path)
 		}
 
 		data = append(data, &Entry{name: keyString, value: value.Data})
@@ -166,7 +165,7 @@ func (c *VaultClient) Write(data Payload, path string, args ...interface{}) erro
 
 	mapped, ok := data.(map[string]interface{})
 	if !ok {
-		return errors.New(fmt.Sprintf("could not write data for path '%s', wrong type", path))
+		return fmt.Errorf("could not write data for path '%s', wrong type", path)
 	}
 	_, err := c.client.Logical().Write(path, mapped)
 	return err
