@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	pkg "github.com/RentTheRunway/vault-auto-config/internal/vault-auto-config"
+	pkg "github.com/RentTheRunway/vault-auto-config/pkg/vault-auto-config"
 	"github.com/spf13/cobra"
 )
 
