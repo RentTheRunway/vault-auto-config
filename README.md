@@ -14,8 +14,8 @@ To install this tool, simply download the appropriate binary from releases and r
 
 For example:
 ```shell script
-wget -O /usr/bin/vault-auto-config https://github.com/RentTheRunway/vault-auto-config/releases/download/v1.0.0/vault-auto-config-linux-amd64
-chmod +x /usr/bin/vault-auto-config
+wget -O /usr/local/bin/vault-auto-config https://github.com/RentTheRunway/vault-auto-config/releases/download/v1.0.0/vault-auto-config-linux-amd64
+chmod +x /usr/local/bin/vault-auto-config
 ```
 
 ## Creating a new release
