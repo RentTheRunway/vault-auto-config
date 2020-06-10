@@ -3,21 +3,20 @@ package vault_auto_config
 import (
 	"errors"
 	"github.com/RentTheRunway/vault-auto-config/internal/vault-auto-config/state"
+	yaml2 "github.com/goccy/go-yaml"
 	"os"
 )
 
 type VaultAutoConfig struct {
-	url   string
-	token string
 }
 
 // Creates a new vault configurator object
-func NewVaultAutoConfig(url string, token string) (*VaultAutoConfig, error) {
-	return &VaultAutoConfig{url: url, token: token}, nil
+func NewVaultAutoConfig() *VaultAutoConfig {
+	return &VaultAutoConfig{}
 }
 
 // Dumps the vault configuration state to a directory, overwriting if force is set to true
-func (c *VaultAutoConfig) Dump(outputDir string, force bool) error {
+func (c *VaultAutoConfig) Dump(url string, token string, outputDir string, force bool) error {
 	if !force {
 		isEmpty, err := IsEmptyDir(outputDir)
 		if err != nil {
@@ -31,7 +30,7 @@ func (c *VaultAutoConfig) Dump(outputDir string, force bool) error {
 		_ = os.RemoveAll(outputDir)
 	}
 
-	vault, err := state.NewVaultClient(c.url, c.token)
+	vault, err := state.NewVaultClient(url, token)
 	if err != nil {
 		return err
 	}
@@ -51,8 +50,8 @@ func (c *VaultAutoConfig) Dump(outputDir string, force bool) error {
 }
 
 // Applies vault configuration from a directory, optionally, with a secrets file to decrypt using sops
-func (c *VaultAutoConfig) Apply(inputDir string, secrets string) error {
-	vault, err := state.NewVaultClient(c.url, c.token)
+func (c *VaultAutoConfig) Apply(url string, token string, inputDir string, secrets string) error {
+	vault, err := state.NewVaultClient(url, token)
 	if err != nil {
 		return err
 	}
@@ -69,4 +68,42 @@ func (c *VaultAutoConfig) Apply(inputDir string, secrets string) error {
 	}
 
 	return state.ApplyState(config, vault)
+}
+
+func (c *VaultAutoConfig) FileState(inputDir string, secrets string) (string, error) {
+	client, err := state.NewFileSystemClient(inputDir, secrets)
+	if err != nil {
+		return "", err
+	}
+
+	configState, err := state.ReadState(client)
+	if err != nil {
+		return "", err
+	}
+
+	bytes, err := yaml2.Marshal(configState)
+	if err != nil {
+		return "", err
+	}
+
+	return string(bytes), nil
+}
+
+func (c *VaultAutoConfig) VaultState(url string, token string) (string, error) {
+	client, err := state.NewVaultClient(url, token)
+	if err != nil {
+		return "", err
+	}
+
+	configState, err := state.ReadState(client)
+	if err != nil {
+		return "", err
+	}
+
+	bytes, err := yaml2.Marshal(configState)
+	if err != nil {
+		return "", err
+	}
+
+	return string(bytes), nil
 }

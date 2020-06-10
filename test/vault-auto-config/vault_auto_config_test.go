@@ -41,11 +41,9 @@ var files = []string{
 }
 
 func init() {
-	var err error
-	if autoConfig, err = pkg.NewVaultAutoConfig(vaultAddress, vaultToken); err != nil {
-		panic(err)
-	}
+	autoConfig = pkg.NewVaultAutoConfig()
 
+	var err error
 	if client, err = api.NewClient(&api.Config{Address: vaultAddress}); err != nil {
 		panic(err)
 	}
@@ -56,7 +54,7 @@ func init() {
 // Tests vault-auto-config by applying a maximal configuration that tests all configurable resources, checking that the
 // resources exist in vault, then applying an empty config and verifying the resources are all removed
 func TestApply(t *testing.T) {
-	if err := autoConfig.Apply("full-config", "secrets.yaml"); err != nil {
+	if err := autoConfig.Apply(vaultAddress, vaultToken, "full-config", "secrets.yaml"); err != nil {
 		t.Error(err)
 		t.Fail()
 		return
@@ -71,7 +69,7 @@ func TestApply(t *testing.T) {
 	}
 
 	// applying an empty config should remove these resources
-	if err := autoConfig.Apply("empty-config", ""); err != nil {
+	if err := autoConfig.Apply(vaultAddress, vaultToken, "empty-config", ""); err != nil {
 		t.Error(err)
 		t.Fail()
 		return
@@ -85,13 +83,13 @@ func TestApply(t *testing.T) {
 // Tests vault-auto-config by applying a maximal configuration that tests all configurable resources, then doing a dump
 // of that configuration and testing that the expected files exist
 func TestDump(t *testing.T) {
-	if err := autoConfig.Apply("full-config", "secrets.yaml"); err != nil {
+	if err := autoConfig.Apply(vaultAddress, vaultToken, "full-config", "secrets.yaml"); err != nil {
 		t.Error(err)
 		t.Fail()
 		return
 	}
 
-	if err := autoConfig.Dump("dump", false); err != nil {
+	if err := autoConfig.Dump(vaultAddress, vaultToken, "dump", false); err != nil {
 		t.Error(err)
 		t.Fail()
 		return

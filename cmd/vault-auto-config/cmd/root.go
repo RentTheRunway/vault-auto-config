@@ -7,10 +7,10 @@ import (
 
 var (
 	// common flags
-	vaultUrl string
-	token    string
-	verbose  bool
-	secrets  string
+	url     string
+	token   string
+	verbose bool
+	secrets string
 
 	rootCmd = &cobra.Command{
 		Use:   "vault-auto-config",
@@ -22,10 +22,14 @@ in a directory structure that mimics the vault api`,
 )
 
 func Execute() {
+	cobra.OnInitialize(initLogging)
+	_ = rootCmd.Execute()
+}
+
+func initLogging() {
 	if verbose {
 		_ = loggo.ConfigureLoggers("<root>=DEBUG")
 	}
-	_ = rootCmd.Execute()
 }
 
 func init() {
@@ -44,7 +48,7 @@ func init() {
 
 func addVaultFlags(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(
-		&vaultUrl,
+		&url,
 		"url",
 		"u",
 		"http://127.0.0.1:8200",

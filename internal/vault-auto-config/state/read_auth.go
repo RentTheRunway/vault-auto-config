@@ -21,7 +21,7 @@ func ReadAuthState(client Client, node *Node) error {
 
 		authNode := node.AddNode(auth.name)
 
-		var reader func(Client, string, *Node) error
+		var reader NamedReader
 		switch kind {
 		case "kubernetes":
 			reader = ReadAuthKubernetesState

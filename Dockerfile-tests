@@ -1,4 +1,4 @@
-# Dockerfile for running unit tests
+# Dockerfile for running tests
 FROM golang:1.14
 
 # install sops

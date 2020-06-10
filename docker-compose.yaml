@@ -1,4 +1,4 @@
-# This is a docker-compose file for running unit tests against an actual dev instance of vault
+# This is a docker-compose file for running tests against an actual dev instance of vault
 version: "3"
 
 services:

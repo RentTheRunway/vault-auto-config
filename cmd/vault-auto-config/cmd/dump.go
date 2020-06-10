@@ -15,17 +15,8 @@ var (
 		Short: "Dumps the current vault configuration",
 		Long:  "Dumps the current vault configuration into the specified directory",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			outputDir, err := cmd.Flags().GetString("output-dir")
-			if err != nil {
-				return err
-			}
-
-			vaultAutoConfig, err := pkg.NewVaultAutoConfig(vaultUrl, token)
-			if err != nil {
-				return err
-			}
-
-			return vaultAutoConfig.Dump(outputDir, force)
+			vaultAutoConfig := pkg.NewVaultAutoConfig()
+			return vaultAutoConfig.Dump(url, token, outputDir, force)
 		},
 	}
 )

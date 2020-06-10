@@ -39,7 +39,7 @@ func ApplyAuthState(node *Node, client Client) error {
 			}
 		}
 
-		var writer func(*Node, string, Client) error
+		var writer NamedWriter
 		switch kind {
 		case "kubernetes":
 			writer = ApplyAuthKubernetesState

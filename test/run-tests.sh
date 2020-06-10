@@ -5,7 +5,7 @@ cat >key-spec <<EOF
      Key-Type: default
      Subkey-Type: default
      Name-Real: Infrastructure
-     Name-Comment: For unit testing with sops
+     Name-Comment: For testing with sops
      Name-Email: infrastructure@renttherunway.com
      Expire-Date: 0
      %no-protection
@@ -29,5 +29,5 @@ sops --encrypt --input-type yaml --output-type yaml secrets.yaml.dec > secrets.y
 
 popd > /dev/null
 
-# Run the unit tests
+# Run the integration tests
 go test ./vault-auto-config

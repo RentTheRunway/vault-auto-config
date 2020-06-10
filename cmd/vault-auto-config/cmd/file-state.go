@@ -2,8 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/RentTheRunway/vault-auto-config/internal/vault-auto-config/state"
-	yaml2 "github.com/goccy/go-yaml"
+	pkg "github.com/RentTheRunway/vault-auto-config/internal/vault-auto-config"
 	"github.com/spf13/cobra"
 )
 
@@ -13,28 +12,8 @@ var (
 		Short: "Returns the current vault configuration state from the file system",
 		Long:  "Returns the current vault configuration state from the file system",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			inputDir, err := cmd.Flags().GetString("input-dir")
-			if err != nil {
-				return err
-			}
-
-			client, err := state.NewFileSystemClient(inputDir, secrets)
-			if err != nil {
-				return err
-			}
-
-			configState, err := state.ReadState(client)
-			if err != nil {
-				return err
-			}
-
-			bytes, err := yaml2.Marshal(configState)
-			if err != nil {
-				return err
-			}
-
-			fmt.Println(string(bytes))
-
+			vaultAutoConfig := pkg.NewVaultAutoConfig()
+			fmt.Println(vaultAutoConfig.FileState(inputDir, secrets))
 			return nil
 		},
 	}
