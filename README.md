@@ -9,6 +9,15 @@ article is that the script does not perform deletions when a resource configurat
 that gracefully for the supported resource types.  For example, if you have an okta auth `auth/okta/groups` resource
 name `infra.yaml`, and you delete it, performing an `apply` will remove that group from the Vault configuration as well.
 
+## Installation
+To install this tool, simply download the appropriate binary from releases and rename and chmod accordingly.
+
+For example:
+```shell script
+wget -O /usr/bin/vault-auto-config https://github.com/RentTheRunway/vault-auto-config/releases/download/v1.0.0/vault-auto-config-linux-amd64
+chmod +x /usr/bin/vault-auto-config
+```
+
 ## Tool commands
 
 ##### To print out Vault's current configuration, run:
@@ -33,7 +42,7 @@ vault-auto-config apply --url <vault url> --token <vault token> --input-dir <con
 ```
 
 ##### Secrets
-For the `file-state` and `apply` commands, you can optionally pass a sops encryted secrets yaml file, which will then
+For the `file-state` and `apply` commands, you can optionally pass a sops encrypted secrets yaml file, which will then
 be used as values in your configuration files.
 
 For example:
