@@ -6,29 +6,38 @@ import (
 )
 
 // Returns true if directory does not exist or is empty
-func IsEmptyDir(dir string) (bool, error) {
-	_, err := os.Stat(dir)
+func IsEmptyDir(dir string) (empty bool, err error) {
+	_, err = os.Stat(dir)
 
 	if os.IsNotExist(err) {
-		return true, nil
+		empty = true
+		err = nil
+		return
 	}
 
 	if err != nil {
-		return false, err
+		return
 	}
 
 	f, err := os.Open(dir)
 
 	if err != nil {
-		return false, err
+		return
 	}
 
-	defer f.Close()
+	defer func() {
+		cerr := f.Close()
+		if err == nil {
+			err = cerr
+		}
+	}()
 
 	_, err = f.Readdirnames(1)
 	if err == io.EOF {
-		return true, nil
+		empty = true
+		err = nil
+		return
 	}
 
-	return false, nil
+	return
 }
