@@ -18,6 +18,11 @@ wget -O /usr/bin/vault-auto-config https://github.com/RentTheRunway/vault-auto-c
 chmod +x /usr/bin/vault-auto-config
 ```
 
+## Creating a new release
+Creating a release is as simple as creating a tag, like `v1.0.0`, and the github actions workflow will automatically cut
+a release, build binaries for various operating systems and attach them to the release.
+
+
 ## Tool commands
 
 ##### To print out Vault's current configuration, run:
