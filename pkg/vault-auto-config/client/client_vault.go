@@ -70,7 +70,7 @@ func (c *VaultClient) listSysAuth() ([]*Entry, error) {
 
 	// payload contains the sub-resources themselves
 	for key, value := range result {
-		key = key[0 : len(key)-1]
+		name := key[0 : len(key)-1]
 
 		var mapped Payload
 		bytes, err := yaml2.Marshal(value)
@@ -81,7 +81,7 @@ func (c *VaultClient) listSysAuth() ([]*Entry, error) {
 			return nil, err
 		}
 
-		data = append(data, &Entry{Name: key, Value: mapped})
+		data = append(data, &Entry{Name: name, Value: mapped})
 	}
 
 	return data, nil
