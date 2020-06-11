@@ -16,8 +16,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ github.event.release.tag_name }}
+          release_name: ${{ github.event.release.tag_name }}
           draft: false
           prerelease: false
     outputs:
@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.ARTIFACTORY_DEPLOY_PASSWORD }}
           registry: artifactory.rtr.cloud
           repository: docker/vault-auto-config
-          tags: latest,${{ github.ref }}
+          tags: latest,${{ github.event.release.tag_name }}
 
   upload_assets:
     name: Build and Upload Release Assets
