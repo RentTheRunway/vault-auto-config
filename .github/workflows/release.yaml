@@ -83,7 +83,7 @@ jobs:
           go-version: 1.14.x
 
       - name: Build Binary ${{ env.BINARY }}
-        run: go build ./cmd/vault-auto-config -o ${{ env.BINARY }}
+        run: go build -o ${{ env.BINARY }} ./cmd/vault-auto-config
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
