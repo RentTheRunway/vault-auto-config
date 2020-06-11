@@ -23,6 +23,19 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
 
+  build_push_docker:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.ARTIFACTORY_DEPLOY_USER }}
+          password: ${{ secrets.ARTIFACTORY_DEPLOY_PASSWORD }}
+          registry: artifactory.rtr.cloud
+          repository: docker/vault-auto-config
+          tags: latest,${{ github.ref }}
+
   upload_assets:
     name: Build and Upload Release Assets
     runs-on: ubuntu-latest
