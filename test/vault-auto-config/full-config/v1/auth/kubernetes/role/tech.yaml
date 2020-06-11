@@ -1,0 +1,3 @@
+name: tech
+bound_service_account_names: service_account
+bound_service_account_namespaces: default

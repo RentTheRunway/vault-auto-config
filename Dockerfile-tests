@@ -1,0 +1,12 @@
+# Dockerfile for running tests
+FROM golang:1.14
+
+# install sops
+RUN wget -O /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/v3.5.0/sops-v3.5.0.linux && \
+    chmod +x /usr/local/bin/sops
+
+ENV CGO_ENABLED=0
+COPY . /go/src
+WORKDIR /go/src/test
+
+ENTRYPOINT ["./run-tests.sh"]

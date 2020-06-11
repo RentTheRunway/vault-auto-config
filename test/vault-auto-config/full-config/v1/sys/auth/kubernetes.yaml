@@ -1,0 +1,5 @@
+description: Kubernetes auth backend configuration
+type: kubernetes
+config:
+  default_lease_ttl: 30m
+  max_lease_ttl: 30m
