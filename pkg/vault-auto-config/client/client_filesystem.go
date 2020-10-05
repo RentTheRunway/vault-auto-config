@@ -106,8 +106,8 @@ func (c *FileSystemClient) Write(data Payload, path string, args ...interface{})
 		return err
 	}
 
-	_ = os.MkdirAll(filepath.Dir(path), 777)
-	return ioutil.WriteFile(path, yaml, 666)
+	_ = os.MkdirAll(filepath.Dir(path), 0755)
+	return ioutil.WriteFile(path, yaml, 0666)
 }
 
 // Reads a config state yaml file
