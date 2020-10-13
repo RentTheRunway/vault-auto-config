@@ -10,7 +10,17 @@ that gracefully for the supported resource types.  For example, if you have an o
 name `infra.yaml`, and you delete it, performing an `apply` will remove that group from the Vault configuration as well.
 
 ## Installation
-To install this tool, simply download the appropriate binary from releases and rename and chmod accordingly.
+To build `vault-auto-config` locally, build it with::
+
+```shell script
+./build-cli.sh
+```
+
+The executable `vault-auto-config` will now be available at the root of the repo.
+
+Run `./vault-auto-config help` to see all available commands.
+
+Alternatively, you can download the appropriate binary from releases and rename and chmod accordingly.
 
 For example:
 ```shell script

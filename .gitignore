@@ -1,2 +1,6 @@
 .idea/
 go.sum
+
+vault-auto-config
+vault-auto-config.exe
+.bash_history
