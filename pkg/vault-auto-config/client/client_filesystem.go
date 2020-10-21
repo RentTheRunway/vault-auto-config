@@ -126,6 +126,8 @@ func (c *FileSystemClient) Read(path string, args ...interface{}) (Payload, erro
 		return nil, err
 	}
 
+	log.Debugf("File contents: \n%s", string(contents))
+
 	var data Payload
 	if err = yaml2.Unmarshal(contents, &data); err != nil {
 		return nil, err
