@@ -98,3 +98,9 @@ on a need-to-implement basis.  These are the API paths that are configurable via
 
 /v1/sys/policy
 ```
+
+## Workflow
+The ideal way to use this tool is to always make the configuration changes in your repo, rather than making the
+changes in the Vault UI and then dumping them to config files.  The reason for this is that the dump will not
+contain secrets, will contain unneeded default values and will also be formatted poorly. (e.g. HCL policy files
+will contain "\n")  The `dump` command is more just meant as a starting point if you're starting from scratch.
