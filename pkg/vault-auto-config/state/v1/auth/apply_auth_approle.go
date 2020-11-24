@@ -13,5 +13,7 @@ func ApplyAuthApplroleState(node *config.Node, name string, client client.Client
 		client,
 		name,
 		ApplyAuthRoleState,
+		ApplyAuthRoleIdState,
+		ApplyAuthSecretIdState,
 	)
 }

@@ -2,9 +2,10 @@ package client
 
 import (
 	"fmt"
+	"strings"
+
 	yaml2 "github.com/goccy/go-yaml"
 	"github.com/hashicorp/vault/api"
-	"strings"
 )
 
 // A client for reading and writing vault configuration state using the vault api
@@ -16,6 +17,10 @@ var readOnlyPaths = map[string]bool{
 	"sys/auth/token":     true,
 	"sys/policy/default": true,
 	"sys/policy/root":    true,
+}
+
+var writeOnlyEndpoints = map[string]bool{
+	"secret-id": true,
 }
 
 // Creates a new VaultClient
@@ -174,6 +179,12 @@ func (c *VaultClient) Write(data Payload, path string, args ...interface{}) erro
 // Reads a resource
 func (c *VaultClient) Read(path string, args ...interface{}) (Payload, error) {
 	path = fmt.Sprintf(path, args...)
+
+	endpoint := path[strings.LastIndex(path, "/")+1:]
+
+	if _, ok := writeOnlyEndpoints[endpoint]; ok {
+		return nil, nil
+	}
 
 	log.Debugf("Reading api resource %s", path)
 

@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"fmt"
+
 	"github.com/RentTheRunway/vault-auto-config/pkg/vault-auto-config/client"
 	"github.com/RentTheRunway/vault-auto-config/pkg/vault-auto-config/config"
 )
@@ -57,6 +59,32 @@ func ApplyAuthResourceState(node *config.Node, name string, resource string, cli
 	return nil
 }
 
+// Applied a field from a config to a sub resource
+func ApplyAuthSubResourceState(node *config.Node, name string, resource string, configField string, subResource string, resourceClient client.Client) error {
+	node = node.Children[resource]
+
+	if node == nil {
+		return fmt.Errorf("unable to apply subresource. No child %s", resource)
+	}
+
+	for childName, node := range node.Children {
+
+		value, err := client.GetString(node.Config, configField)
+
+		if err != nil {
+			return err
+		}
+
+		m := map[string]interface{}{configField: value}
+
+		if err := resourceClient.Write(m, "auth/%s/%s/%s/%s", name, resource, childName, subResource); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // Applies group states for an auth backend
 func ApplyAuthGroupsState(node *config.Node, name string, client client.Client) error {
 	return ApplyAuthResourceState(node, name, "groups", client)
@@ -75,4 +103,12 @@ func ApplyAuthRolesState(node *config.Node, name string, client client.Client) e
 // Applies role states for an auth backend, but with the singular name "role"
 func ApplyAuthRoleState(node *config.Node, name string, client client.Client) error {
 	return ApplyAuthResourceState(node, name, "role", client)
+}
+
+func ApplyAuthRoleIdState(node *config.Node, name string, client client.Client) error {
+	return ApplyAuthSubResourceState(node, name, "role", "role_id", "role-id", client)
+}
+
+func ApplyAuthSecretIdState(node *config.Node, name string, client client.Client) error {
+	return ApplyAuthSubResourceState(node, name, "role", "secret_id", "secret-id", client)
 }

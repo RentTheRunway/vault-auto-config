@@ -43,7 +43,7 @@ func AppendAuthState(resourceClient client.Client, name string, resource string,
 	node = node.Children[resource]
 
 	if node == nil {
-		return fmt.Errorf("unable to append state. No child %s", name)
+		return fmt.Errorf("unable to append state. No child %s", resource)
 	}
 
 	for childName, node := range node.Children {
@@ -81,4 +81,8 @@ func ReadAuthRoleState(client client.Client, name string, node *config.Node) err
 
 func AppendAuthRoleIdState(client client.Client, name string, node *config.Node) error {
 	return AppendAuthState(client, name, "role", "role-id", node)
+}
+
+func AppendAuthSecretIdState(client client.Client, name string, node *config.Node) error {
+	return AppendAuthState(client, name, "role", "secret-id", node)
 }

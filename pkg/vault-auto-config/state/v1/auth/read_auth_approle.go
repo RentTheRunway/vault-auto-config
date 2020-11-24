@@ -14,5 +14,6 @@ func ReadAuthApproleState(client client.Client, name string, node *config.Node) 
 		name,
 		ReadAuthRoleState,
 		AppendAuthRoleIdState,
+		AppendAuthSecretIdState,
 	)
 }
