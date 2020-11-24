@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"fmt"
+
 	"github.com/RentTheRunway/vault-auto-config/pkg/vault-auto-config/client"
 	"github.com/RentTheRunway/vault-auto-config/pkg/vault-auto-config/config"
 )
@@ -18,10 +20,10 @@ func ReadAuthConfigState(client client.Client, name string, node *config.Node) e
 }
 
 // Reads a generic auth resource state for an auth backend (e.g. groups, roles, etc.)
-func ReadAuthResourceState(client client.Client, name string, listResource string, resource string, node *config.Node) error {
+func ReadAuthResourceState(resourceClient client.Client, name string, listResource string, resource string, node *config.Node) error {
 	node = node.AddNode(resource)
 
-	resources, err := client.List("auth/%s/%s", name, listResource)
+	resources, err := resourceClient.List("auth/%s/%s", name, listResource)
 
 	if err != nil {
 		return err
@@ -30,6 +32,28 @@ func ReadAuthResourceState(client client.Client, name string, listResource strin
 	for _, resource := range resources {
 		resourceNode := node.AddNode(resource.Name)
 		resourceNode.Config = resource.Value
+	}
+
+	return nil
+}
+
+// Add additional config to a node from another auth resource
+// Useful for combining multiple resources
+func AppendAuthState(resourceClient client.Client, name string, resource string, subResource string, node *config.Node) error {
+	node = node.Children[resource]
+
+	if node == nil {
+		return fmt.Errorf("unable to append state. No child %s", name)
+	}
+
+	for childName, node := range node.Children {
+		payload, err := resourceClient.Read("auth/%s/%s/%s/%s", name, resource, childName, subResource)
+
+		if err != nil {
+			return err
+		}
+
+		client.MergePayloads(node.Config, payload)
 	}
 
 	return nil
@@ -53,4 +77,8 @@ func ReadAuthRolesState(client client.Client, name string, node *config.Node) er
 // Reads role states for an auth backend, but with the singular name "role"
 func ReadAuthRoleState(client client.Client, name string, node *config.Node) error {
 	return ReadAuthResourceState(client, name, "role", "role", node)
+}
+
+func AppendAuthRoleIdState(client client.Client, name string, node *config.Node) error {
+	return AppendAuthState(client, name, "role", "role-id", node)
 }

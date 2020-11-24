@@ -87,6 +87,8 @@ on a need-to-implement basis.  These are the API paths that are configurable via
 /v1/auth/kubernetes/config
 /v1/auth/kubernetes/role
 
+/v1/auth/approle/role
+
 /v1/auth/okta/config
 /v1/auth/okta/groups
 /v1/auth/okta/users

@@ -54,3 +54,22 @@ func GetString(p Payload, name string) (string, error) {
 
 	return casted, nil
 }
+
+// Utility method to shallow merge two payloads
+func MergePayloads(p1 Payload, p2 Payload) error {
+	m1, ok := p1.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("could not merge payload, payload1 is wrong type")
+	}
+
+	m2, ok := p2.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("could not merge payload, payload2 is wrong type")
+	}
+
+	for k, v := range m2 {
+		m1[k] = v
+	}
+
+	return nil
+}
