@@ -85,18 +85,21 @@ This tool does not yet implement support for every single auth backend and confi
 on a need-to-implement basis.  These are the API paths that are configurable via this tool:
 ```text
 /v1/auth/kubernetes/config
-/v1/auth/kubernetes/role
+/v1/auth/kubernetes/role/*
 
-/v1/auth/approle/role
+/v1/auth/approle/role/*
+/v1/auth/approle/role/*/role-id
+/v1/auth/approle/role/*/secret-id
 
 /v1/auth/okta/config
-/v1/auth/okta/groups
-/v1/auth/okta/users
+/v1/auth/okta/groups/*
+/v1/auth/okta/users/*
 
-/v1/auth/token/roles
+/v1/auth/token/roles/*
 
 /v1/sys/auth/kubernetes
 /v1/sys/auth/okta
+/v1/sys/auth/approle
 
 /v1/sys/policy
 ```
