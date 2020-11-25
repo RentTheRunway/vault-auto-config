@@ -28,6 +28,15 @@ wget -O /usr/local/bin/vault-auto-config https://github.com/RentTheRunway/vault-
 chmod +x /usr/local/bin/vault-auto-config
 ```
 
+## Running tests
+To run tests locally, execute:
+
+```shell script
+./run-tests.sh
+```
+
+The tests run using docker-compose to create a Vault instance and compare commands against it with sample input.
+
 ## Creating a new release
 Creating a release is as simple as creating a tag, like `v1.0.0`, and the github actions workflow will automatically cut
 a release, build binaries for various operating systems and attach them to the release.

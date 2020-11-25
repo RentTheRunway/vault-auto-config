@@ -1,11 +1,12 @@
 package vault_auto_config_test
 
 import (
-	pkg "github.com/RentTheRunway/vault-auto-config/pkg/vault-auto-config"
-	"github.com/hashicorp/vault/api"
 	"os"
 	"path"
 	"testing"
+
+	pkg "github.com/RentTheRunway/vault-auto-config/pkg/vault-auto-config"
+	"github.com/hashicorp/vault/api"
 )
 
 var autoConfig *pkg.VaultAutoConfig
@@ -17,6 +18,8 @@ const vaultToken = "dev-vault-token"
 // sadly, verifying these is not as simple as just walking the directory structure and doing a GET
 // request for that path, because the vault api is fairly inconsistent from one endpoint to another
 var resources = []string{
+	"/v1/auth/approle/role/java-app",
+	"/v1/auth/approle/role/java-app/role-id",
 	"/v1/auth/kubernetes/config",
 	"/v1/auth/kubernetes/role/tech",
 	"/v1/auth/okta/config",
@@ -29,12 +32,16 @@ var resources = []string{
 }
 
 var files = []string{
+	"v1/auth/approle/role/java-app.yaml",
+	"v1/auth/approle/role/java-app/role-id.yaml",
+	"v1/auth/approle/role/java-app/secret-id.yaml",
 	"v1/auth/kubernetes/role/tech.yaml",
 	"v1/auth/kubernetes/config.yaml",
 	"v1/auth/okta/groups/tech.yaml",
 	"v1/auth/okta/users/bob.yaml",
 	"v1/auth/okta/config.yaml",
 	"v1/auth/token/roles/tech.yaml",
+	"v1/sys/auth/approle.yaml",
 	"v1/sys/auth/kubernetes.yaml",
 	"v1/sys/auth/okta.yaml",
 	"v1/sys/policy/tech.yaml",
