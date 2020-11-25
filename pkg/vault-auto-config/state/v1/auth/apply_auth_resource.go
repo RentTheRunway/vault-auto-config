@@ -105,10 +105,10 @@ func ApplyAuthRoleState(node *config.Node, name string, client client.Client) er
 	return ApplyAuthResourceState(node, name, "role", client)
 }
 
-func ApplyAuthRoleIdState(node *config.Node, name string, client client.Client) error {
+func ApplyAuthApproleRoleIdState(node *config.Node, name string, client client.Client) error {
 	return ApplyAuthSubResourceState(node, name, "role", "role_id", "role-id", client)
 }
 
-func ApplyAuthSecretIdState(node *config.Node, name string, client client.Client) error {
+func ApplyAuthApproleSecretIdState(node *config.Node, name string, client client.Client) error {
 	return ApplyAuthSubResourceState(node, name, "role", "secret_id", "secret-id", client)
 }

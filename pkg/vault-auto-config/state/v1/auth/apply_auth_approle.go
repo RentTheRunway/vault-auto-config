@@ -7,13 +7,13 @@ import (
 )
 
 // Applies state for auth backends of type "approle"
-func ApplyAuthApplroleState(node *config.Node, name string, client client.Client) error {
+func ApplyAuthApproleState(node *config.Node, name string, client client.Client) error {
 	return util.ApplyNamedStates(
 		node,
 		client,
 		name,
 		ApplyAuthRoleState,
-		ApplyAuthRoleIdState,
-		ApplyAuthSecretIdState,
+		ApplyAuthApproleRoleIdState,
+		ApplyAuthApproleSecretIdState,
 	)
 }

@@ -49,7 +49,7 @@ func ApplyAuthState(node *config.Node, stateClient client.Client) error {
 		case "okta":
 			writer = ApplyAuthOktaState
 		case "approle":
-			writer = ApplyAuthApplroleState
+			writer = ApplyAuthApproleState
 		case "token":
 			writer = ApplyAuthTokenState
 		}
