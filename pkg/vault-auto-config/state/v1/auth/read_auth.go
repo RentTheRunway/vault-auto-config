@@ -30,6 +30,8 @@ func ReadAuthState(stateClient client.Client, node *config.Node) error {
 			reader = ReadAuthKubernetesState
 		case "okta":
 			reader = ReadAuthOktaState
+		case "approle":
+			reader = ReadAuthApproleState
 		case "token":
 			continue
 		}

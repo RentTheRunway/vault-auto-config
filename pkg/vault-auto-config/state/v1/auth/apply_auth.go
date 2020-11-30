@@ -48,6 +48,8 @@ func ApplyAuthState(node *config.Node, stateClient client.Client) error {
 			writer = ApplyAuthKubernetesState
 		case "okta":
 			writer = ApplyAuthOktaState
+		case "approle":
+			writer = ApplyAuthApproleState
 		case "token":
 			writer = ApplyAuthTokenState
 		}

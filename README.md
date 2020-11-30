@@ -28,6 +28,15 @@ wget -O /usr/local/bin/vault-auto-config https://github.com/RentTheRunway/vault-
 chmod +x /usr/local/bin/vault-auto-config
 ```
 
+## Running tests
+To run tests locally, execute:
+
+```shell script
+./run-tests.sh
+```
+
+The tests run using docker-compose to create a Vault instance and compare commands against it with sample input.
+
 ## Creating a new release
 Creating a release is as simple as creating a tag, like `v1.0.0`, and the github actions workflow will automatically cut
 a release, build binaries for various operating systems and attach them to the release.
@@ -85,16 +94,21 @@ This tool does not yet implement support for every single auth backend and confi
 on a need-to-implement basis.  These are the API paths that are configurable via this tool:
 ```text
 /v1/auth/kubernetes/config
-/v1/auth/kubernetes/role
+/v1/auth/kubernetes/role/*
+
+/v1/auth/approle/role/*
+/v1/auth/approle/role/*/role-id
+/v1/auth/approle/role/*/secret-id
 
 /v1/auth/okta/config
-/v1/auth/okta/groups
-/v1/auth/okta/users
+/v1/auth/okta/groups/*
+/v1/auth/okta/users/*
 
-/v1/auth/token/roles
+/v1/auth/token/roles/*
 
 /v1/sys/auth/kubernetes
 /v1/sys/auth/okta
+/v1/sys/auth/approle
 
 /v1/sys/policy
 ```

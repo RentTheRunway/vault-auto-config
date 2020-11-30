@@ -2,5 +2,11 @@
 go.sum
 
 vault-auto-config
+!vault-auto-config/
+
 vault-auto-config.exe
 .bash_history
+
+test/key-spec
+test/secrets.yaml
+.sops.yaml
