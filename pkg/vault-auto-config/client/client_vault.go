@@ -214,5 +214,10 @@ func (c *VaultClient) Delete(path string, args ...interface{}) error {
 	log.Debugf("Deleting api resource %s", path)
 
 	_, err := c.client.Logical().Delete(path)
+
+	if err != nil {
+		log.Debugf("Deletion failed. Trying again...")
+		_, err = c.client.Logical().Delete(path)
+	}
 	return err
 }
