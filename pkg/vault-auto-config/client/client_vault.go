@@ -2,8 +2,8 @@ package client
 
 import (
 	"fmt"
-	"strings"
 	"regexp"
+	"strings"
 
 	yaml2 "github.com/goccy/go-yaml"
 	"github.com/hashicorp/vault/api"
@@ -21,7 +21,7 @@ var readOnlyPaths = map[string]bool{
 }
 
 var writeOnlyPaths = [...]string{
-	"auth/approle/role/(.*)/secret-id",
+	"auth/approle/role/(.*)/custom-secret-id",
 }
 
 // Creates a new VaultClient

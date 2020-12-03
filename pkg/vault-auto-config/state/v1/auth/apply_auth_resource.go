@@ -110,5 +110,5 @@ func ApplyAuthApproleRoleIdState(node *config.Node, name string, client client.C
 }
 
 func ApplyAuthApproleSecretIdState(node *config.Node, name string, client client.Client) error {
-	return ApplyAuthSubResourceState(node, name, "role", "secret_id", "secret-id", client)
+	return ApplyAuthSubResourceState(node, name, "role", "secret_id", "custom-secret-id", client)
 }

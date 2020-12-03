@@ -84,5 +84,5 @@ func AppendAuthRoleIdState(client client.Client, name string, node *config.Node)
 }
 
 func AppendAuthSecretIdState(client client.Client, name string, node *config.Node) error {
-	return AppendAuthState(client, name, "role", "secret-id", node)
+	return AppendAuthState(client, name, "role", "custom-secret-id", node)
 }
