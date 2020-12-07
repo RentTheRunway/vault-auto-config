@@ -34,7 +34,7 @@ var resources = []string{
 var files = []string{
 	"v1/auth/approle/role/java-app.yaml",
 	"v1/auth/approle/role/java-app/role-id.yaml",
-	"v1/auth/approle/role/java-app/secret-id.yaml",
+	"v1/auth/approle/role/java-app/custom-secret-id.yaml",
 	"v1/auth/kubernetes/role/tech.yaml",
 	"v1/auth/kubernetes/config.yaml",
 	"v1/auth/okta/groups/tech.yaml",

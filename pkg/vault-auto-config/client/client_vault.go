@@ -2,8 +2,8 @@ package client
 
 import (
 	"fmt"
-	"strings"
 	"regexp"
+	"strings"
 
 	yaml2 "github.com/goccy/go-yaml"
 	"github.com/hashicorp/vault/api"
@@ -21,7 +21,7 @@ var readOnlyPaths = map[string]bool{
 }
 
 var writeOnlyPaths = [...]string{
-	"auth/approle/role/(.*)/secret-id",
+	"auth/approle/role/(.*)/custom-secret-id",
 }
 
 // Creates a new VaultClient
@@ -214,5 +214,10 @@ func (c *VaultClient) Delete(path string, args ...interface{}) error {
 	log.Debugf("Deleting api resource %s", path)
 
 	_, err := c.client.Logical().Delete(path)
+
+	if err != nil {
+		log.Debugf("Deletion failed. Trying again...")
+		_, err = c.client.Logical().Delete(path)
+	}
 	return err
 }

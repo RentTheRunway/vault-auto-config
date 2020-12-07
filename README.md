@@ -98,7 +98,7 @@ on a need-to-implement basis.  These are the API paths that are configurable via
 
 /v1/auth/approle/role/*
 /v1/auth/approle/role/*/role-id
-/v1/auth/approle/role/*/secret-id
+/v1/auth/approle/role/*/custom-secret-id
 
 /v1/auth/okta/config
 /v1/auth/okta/groups/*
