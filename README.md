@@ -66,8 +66,9 @@ vault-auto-config apply --url <vault url> --token <vault token> --input-dir <con
 ```
 
 ##### Secrets
-For the `file-state` and `apply` commands, you can optionally pass a sops encrypted secrets yaml file, which will then
-be used as values in your configuration files.
+For the `file-state` and `apply` commands, you can optionally pass in a values file that will be used to template values in your configuration files.
+
+If your secrets are sops encrypted, you can also pass the encrypted secrets yaml file, which will also be used for templating.
 
 For example:
 
@@ -86,6 +87,11 @@ base_url: okta.com
 Then you could run `apply` or `file-state`, passing in sops encrypted secret file:
 ```shell script
 vault-auto-config file-state --input-dir <config dir> --secrets secrets.yaml
+```
+
+Or passing in a plaintext values file for the same purpose
+```shell script
+vault-auto-config file-state --input-dir <config dir> --additional-values secrets.yaml.dec
 ```
 
 

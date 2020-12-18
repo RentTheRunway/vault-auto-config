@@ -22,8 +22,26 @@ type templateData struct {
 }
 
 // Creates a new FileSystemClient
-func NewFileSystemClient(dir string, secretsFile string) (*FileSystemClient, error) {
-	var secrets map[string]interface{}
+func NewFileSystemClient(dir string, secretsFile string, valuesFile string) (*FileSystemClient, error) {
+	secrets := make(map[string]interface{})
+
+	// add values to be templated
+	if valuesFile != "" {
+		log.Debugf("Loading values")
+		yamlFile, err := ioutil.ReadFile(valuesFile)
+		if err != nil {
+			return nil, err
+		}
+
+		var values map[string]interface{}
+		if err = yaml2.Unmarshal(yamlFile, &values); err != nil {
+			return nil, err
+		}
+
+		for k, v := range values {
+			secrets[k] = v
+		}
+	}
 
 	// decrypt secret values using sops
 	if secretsFile != "" {
@@ -33,10 +51,17 @@ func NewFileSystemClient(dir string, secretsFile string) (*FileSystemClient, err
 			return nil, err
 		}
 
-		if err = yaml2.Unmarshal(decrypted, &secrets); err != nil {
+		var values map[string]interface{}
+		if err = yaml2.Unmarshal(decrypted, &values); err != nil {
 			return nil, err
 		}
+
+		for k, v := range values {
+			secrets[k] = v
+		}
 	}
+
+	fmt.Println(secrets)
 
 	return &FileSystemClient{dir: dir, secrets: secrets}, nil
 }

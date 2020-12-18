@@ -29,4 +29,5 @@ func init() {
 	)
 	_ = fileStateCmd.MarkFlagRequired("input-dir")
 	addSecretsFlag(fileStateCmd)
+	addValuesFlag(applyCmd
 }
