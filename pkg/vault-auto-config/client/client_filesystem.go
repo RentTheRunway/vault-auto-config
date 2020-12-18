@@ -61,8 +61,6 @@ func NewFileSystemClient(dir string, secretsFile string, valuesFile string) (*Fi
 		}
 	}
 
-	fmt.Println(secrets)
-
 	return &FileSystemClient{dir: dir, secrets: secrets}, nil
 }
 
