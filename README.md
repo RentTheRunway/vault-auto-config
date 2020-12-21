@@ -91,7 +91,7 @@ vault-auto-config file-state --input-dir <config dir> --secrets secrets.yaml
 
 Or passing in a plaintext values file for the same purpose
 ```shell script
-vault-auto-config file-state --input-dir <config dir> --additional-values secrets.yaml.dec
+vault-auto-config file-state --input-dir <config dir> --values secrets.yaml.dec
 ```
 
 

@@ -15,7 +15,7 @@ var (
 		Long:  "Applies the given vault configuration from the specified directory",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			vaultAutoConfig := pkg.NewVaultAutoConfig()
-			return vaultAutoConfig.Apply(url, token, inputDir, secrets, additionalValues)
+			return vaultAutoConfig.Apply(url, token, inputDir, secrets, values)
 		},
 	}
 )

@@ -11,7 +11,7 @@ var (
 	token   string
 	verbose bool
 	secrets string
-	additionalValues string
+	values string
 
 	rootCmd = &cobra.Command{
 		Use:   "vault-auto-config",
@@ -74,10 +74,10 @@ func addSecretsFlag(cmd *cobra.Command) {
 		"A secrets yaml file encrypted with sops to pass in for go template values",
 	)
 }
-func addValuesFlag(cmd *combra.Command) {
+func addValuesFlag(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(
-		&additionalValues,
-		"additional-values",
+		&values,
+		"values",
 		"a",
 		"",
 		"A plaintext yaml file to template from",
