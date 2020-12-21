@@ -37,7 +37,7 @@ func (c *VaultAutoConfig) Dump(url string, token string, outputDir string, force
 		return err
 	}
 
-	file, err := client.NewFileSystemClient(outputDir, "")
+	file, err := client.NewFileSystemClient(outputDir, "", "")
 	if err != nil {
 		return err
 	}
@@ -51,14 +51,14 @@ func (c *VaultAutoConfig) Dump(url string, token string, outputDir string, force
 	return state.ApplyState(config, file)
 }
 
-// Applies vault configuration from a directory, optionally, with a secrets file to decrypt using sops
-func (c *VaultAutoConfig) Apply(url string, token string, inputDir string, secrets string) error {
+// Applies vault configuration from a directory, optionally, with a file of values and/or a secrets file to decrypt using sops
+func (c *VaultAutoConfig) Apply(url string, token string, inputDir string, secrets string, values string) error {
 	vault, err := client.NewVaultClient(url, token)
 	if err != nil {
 		return err
 	}
 
-	file, err := client.NewFileSystemClient(inputDir, secrets)
+	file, err := client.NewFileSystemClient(inputDir, secrets, values)
 	if err != nil {
 		return err
 	}
@@ -72,8 +72,8 @@ func (c *VaultAutoConfig) Apply(url string, token string, inputDir string, secre
 	return state.ApplyState(config, vault)
 }
 
-func (c *VaultAutoConfig) FileState(inputDir string, secrets string) (string, error) {
-	client, err := client.NewFileSystemClient(inputDir, secrets)
+func (c *VaultAutoConfig) FileState(inputDir string, secrets string, values string) (string, error) {
+	client, err := client.NewFileSystemClient(inputDir, secrets, values)
 	if err != nil {
 		return "", err
 	}

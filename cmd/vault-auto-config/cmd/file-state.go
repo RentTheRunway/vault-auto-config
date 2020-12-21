@@ -13,7 +13,7 @@ var (
 		Long:  "Returns the current vault configuration state from the file system",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			vaultAutoConfig := pkg.NewVaultAutoConfig()
-			fmt.Println(vaultAutoConfig.FileState(inputDir, secrets))
+			fmt.Println(vaultAutoConfig.FileState(inputDir, secrets, values))
 			return nil
 		},
 	}
@@ -29,4 +29,5 @@ func init() {
 	)
 	_ = fileStateCmd.MarkFlagRequired("input-dir")
 	addSecretsFlag(fileStateCmd)
+	addValuesFlag(fileStateCmd)
 }
