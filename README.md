@@ -1,5 +1,9 @@
 # Vault Auto Configuration Tool
 
+## This repo is DEPRECATED
+Please use the [Vault Terraform Provider](https://registry.terraform.io/providers/hashicorp/vault/latest/docs) instead, as it will handle state changes better.  Currently, `vault-auto-config` will always remove/add auth backends, even if they haven't changed, since it wasn't designed to
+track their state reliably like Terraform does.
+
 ## Overview
 This tool allows you to store your Vault configuration in a directory structure with yaml files that reflects the Vault
 api and then apply that configuration to a Vault instance.  This tool is inspired by HashiCorp's
