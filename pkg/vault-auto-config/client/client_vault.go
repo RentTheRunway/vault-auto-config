@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"time"
 
 	yaml2 "github.com/goccy/go-yaml"
 	"github.com/hashicorp/vault/api"
@@ -32,6 +33,7 @@ func NewVaultClient(url string, token string) (*VaultClient, error) {
 		return nil, err
 	}
 
+	client.SetClientTimeout(time.Second * 300)
 	client.SetToken(token)
 	return &VaultClient{client: client}, nil
 }
